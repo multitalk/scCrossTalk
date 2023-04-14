@@ -1,5 +1,5 @@
 # scCrossTalk
-[![R >4.0](https://img.shields.io/badge/R-%3E%3D4.0-brightgreen)](https://www.r-project.org/) [![CellTalkDB v1.0](https://img.shields.io/badge/CellTalkDB-v1.0-blueviolet)](http://tcm.zju.edu.cn/celltalkdb/)
+[![R > 4.0](https://img.shields.io/badge/R-%3E%204.0-blue)](https://www.r-project.org/) [![CellTalkDB v1.0](https://img.shields.io/badge/CellTalkDB-v1.0-blueviolet)](http://tcm.zju.edu.cn/celltalkdb/)
 
 
 ### A cell-cell communication inference approach for single-cell transcriptomic data
