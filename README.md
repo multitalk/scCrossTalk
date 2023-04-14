@@ -20,7 +20,7 @@
 ```
 
 # Usage
-scCrossTalk method consists of two parts, wherein the first is to enrich the LR pairs mediating cell-cell communications and the second is to visualize the cell-cell communications and the underlying LR interactions. Classification and description of scCrossTalk functions are shown in the __[wiki page](https://github.com/multitalk/scCrossTalk/wiki)__ and __[tutorial](https://raw.githack.com/multitalk/scCrossTalk/main/vignettes/tutorial.html)__
+scCrossTalk method consists of two parts, wherein the first is to enrich the LR pairs mediating cell-cell communications and the second is to visualize the cell-cell communications and the underlying LR interactions. Classification and description of scCrossTalk functions are shown in the __[document](https://raw.githack.com/multitalk/scCrossTalk/main/vignettes/scCrossTalk.pdf)__ and __[tutorial](https://raw.githack.com/multitalk/scCrossTalk/main/vignettes/tutorial.html)__
 
 - ### Enrich the LR pairs mediating cell-cell communications
 ```
