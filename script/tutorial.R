@@ -5,8 +5,8 @@ load(paste0(system.file(package = 'scCrossTalk'), "/extdata/example.rda"))
 
 sc_data <- rev_gene(data = sc_data,data_type = "count",species = "Human",geneinfo = geneinfo)
 
-obj <- create_scCrossTalk(sc_data = sc_data,sc_celltype = sc_celltype,species = "Human")
-obj <- find_lrpairs(object = obj, lrpairs = lrpairs)
+obj <- create_scCrossTalk(sc_data = sc_data,sc_celltype = sc_celltype,species = "Human",if_normalize = FALSE)
+obj <- find_lrpairs(object = obj, lrpairs = lrpairs, min_cell_num = 10, cell_min_pct = 0.1, p_value = 0.05)
 
 plot_cci_chord(obj)
 plot_cci_circle(obj)
