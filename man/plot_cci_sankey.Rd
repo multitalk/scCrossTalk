@@ -7,7 +7,8 @@
 plot_cci_sankey(
   object,
   celltype = NULL,
-  miRNA = NULL,
+  ligand = NULL,
+  receptor = NULL,
   celltype_color = NULL,
   edge_color = NULL,
   show_type = "number",
@@ -15,21 +16,24 @@ plot_cci_sankey(
   edge_alpha = 0.5,
   node_size = 40,
   text_size = 15,
-  node_pad = 20
+  node_pad = 20,
+  ...
 )
 }
 \arguments{
-\item{object}{miRTalk object after \code{\link{find_cci}}}
+\item{object}{scCrossTalk object after \code{\link{find_lrpairs}}}
 
 \item{celltype}{which cell types to plot. Default is to plot all cell types}
 
-\item{miRNA}{which miRNAs to use. Default is to plot all inferred miRNAs}
+\item{ligand}{which ligand to use. Default is to plot all inferred ligands}
+
+\item{receptor}{which receptor to use. Default is to plot all inferred receptors}
 
 \item{celltype_color}{Colors for the cell types, whose length must be equal to \code{celltype}}
 
 \item{edge_color}{Colors for the edges from the sender cell type, whose length must be equal to \code{celltype}, Or use \code{"NO"} to cancel it}
 
-\item{show_type}{which type of miRNAs to show, \code{"number"} and \code{"activity"} for sum of inferred miRNAs number and activity, respectively, or \code{"bayes"} for max Bayes probability. Default is \code{"number"}}
+\item{show_type}{which type to show, \code{"number"} and \code{"score"} for sum of inferred LR number and score, respectively. Default is \code{"number"}}
 
 \item{if_show_autocrine}{Whether to show autocrine. Default is \code{FALSE}}
 
@@ -40,10 +44,12 @@ plot_cci_sankey(
 \item{text_size}{Size of text. Default is \code{15}}
 
 \item{node_pad}{Size of node padding. Numeric essentially influences the width height. Default is \code{20}}
+
+\item{...}{parameters pass to \code{\link[networkD3]{sankeyNetwork}}}
 }
 \value{
-Sankey plot of cell-cell communications mediated by EV-derived miRNA
+Sankey plot of cell-cell communications mediated by ligand-receptor interactions
 }
 \description{
-Sankey plot of cell-cell communications from senders to receivers with the sum of inferred miRNAs number or activity, or the max Bayes probability
+Sankey plot of cell-cell communications from senders to receivers with the sum of inferred number or score of ligand-receptor interactions
 }

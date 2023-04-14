@@ -38,6 +38,12 @@ create_scCrossTalk <- function(sc_data, sc_celltype, species, if_normalize = TRU
     colnames(sc_data) <- .rename_chr(colnames(sc_data))
     sc_meta <- data.frame(cell = colnames(sc_data), celltype = sc_celltype_new, stringsAsFactors = FALSE)
     sc_data <- sc_data[rowSums(sc_data) > 0, ]
+    # if_normalize
+    if (if_normalize) {
+        sc_data <- Seurat::CreateSeuratObject(sc_data)
+        sc_data <- Seurat::NormalizeData(sc_data,verbose = FALSE)
+        sc_data <- sc_data[["RNA"]]@data
+    }
     # generate scCrossTalk object
     object <- new("scCrossTalk", data = list(data = sc_data), meta = sc_meta, species = species)
     return(object)
@@ -59,13 +65,12 @@ create_scCrossTalk <- function(sc_data, sc_celltype, species, if_normalize = TRU
 
 find_lrpairs <- function(object, lrpairs, min_cell_num = 10, cell_min_pct = 0.1, p_value = 0.05) {
     # check input
-    if (!is(object, "miRTalk")) {
-        stop("Invalid class for object: must be 'miRTalk'!")
+    if (!is(object, "scCrossTalk")) {
+        stop("Invalid class for object: must be 'scCrossTalk'!")
     }
     if (!all(c("ligand", "receptor", "species") %in% colnames(lrpairs))) {
         stop("Please provide a correct lrpairs data.frame! See demo_lrpairs()!")
     }
-    # check miRNA
     sc_data <- object@data$data
     sc_meta <- object@meta
     species <- object@species
@@ -131,64 +136,40 @@ find_lrpairs <- function(object, lrpairs, min_cell_num = 10, cell_min_pct = 0.1,
     if (nrow(res_pairs) > 0) {
         res_pairs <- res_pairs[,c(12,13,6,1,7:10,2:4)]
         res_pairs$score <- res_pairs$ligand_exp_avg * res_pairs$receptor_exp_avg
-        celltype_pair$LR_number <- 0
-        celltype_pair$LR_score <- 0
-        for (i in 1:nrow(celltype_pair)) {
-            res_pairs1 <- res_pairs[res_pairs$celltype_sender == celltype_pair$celltype_sender[i] & res_pairs$celltype_receiver == celltype_pair$celltype_receiver[i],]
-            if (nrow(celltype_pair) > 0) {
-                celltype_pair$LR_number[i] <- nrow(res_pairs1)
-                celltype_pair$LR_score[i] <- sum(res_pairs1$score)
-            }
-        }
-        celltype_pair <- celltype_pair[celltype_pair$LR_number > 0,]
-        object@result@cci <- celltype_pair
-        object@result@lrpairs <- res_pairs
+        object@cci <- res_pairs
     } else {
         warning("No LR pairs found!")
     }
     return(object)
 }
 
-#' @title Get pathways
+#' @title Get top n LR-pairs
 #'
-#' @description Get pathways for target genes
-#' @param target_genes Character of one or more target genes
-#' @param pathways A data.frame of the system data containing gene-gene interactions and pathways from KEGG and Reactome for \code{'Human'}, \code{'Mouse'} or \code{'Rat'}. see \code{\link{demo_pathways}}
-#' @param species A character meaning species of the target genes.\code{'Human'}, \code{'Mouse'} or \code{'Rat'}
-#' @return Pathways for one or more target genes
+#' @description Get top n LR-pairs for each cell pairs
+#' @param object scCrossTalk object after \code{\link{create_scCrossTalk}}
+#' @param top_n Number of top LR-pairs. Default is {10}
+#' @return A data.frame containing the top n LR-pairs for each cell pairs
 #' @import Matrix
 #' @export
 
-find_pathways <- function(target_genes, pathways, species) {
-    if (!all(c("src", "dest", "pathway", "species") %in% colnames(pathways))) {
-        stop("Please provide a correct pathways data.frame! See demo_pathways()!")
+get_top_lrpairs <- function(object, top_n = 10){
+    # check input
+    if (!is(object, "scCrossTalk")) {
+        stop("Invalid class for object: must be 'scCrossTalk'!")
     }
-    if (length(species) > 1 | !species %in% c("Human", "Mouse", "Rat")) {
-        stop("Please provide a correct species, i.e., 'Human', 'Mouse' or 'Rat'!")
+    cci <- object@cci
+    if (nrow(cci) == 0) {
+        stop("No cci found in object!")
     }
-    pathways <- pathways[pathways$species == species, ]
-    pathways <- pathways[pathways$src %in% target_genes | pathways$dest %in% target_genes, ]
-    return(pathways)
-}
-
-#' @title Get GO terms
-#'
-#' @description Get GO terms for target genes
-#' @param target_genes Character of one or more target genes
-#' @param gene2go A data.frame of the system data containing GO terms for \code{'Human'}, \code{'Mouse'} or \code{'Rat'}. see \code{\link{demo_gene2go}}
-#' @param species A character meaning species of the target genes.\code{'Human'}, \code{'Mouse'} or \code{'Rat'}
-#' @return GO terms for one or more target genes
-#' @import Matrix
-#' @export
-
-find_gene2go <- function(target_genes, gene2go, species) {
-    if (!all(c("symbol", "GO_term", "species") %in% colnames(gene2go))) {
-        stop("Please provide a correct gene2go data.frame! See demo_gene2go()!")
+    cellpair <- unique(cci[,c("celltype_sender", "celltype_receiver")])
+    cci_final <- data.frame()
+    for (i in 1:nrow(cellpair)) {
+        cci_tmp <- cci[cci$celltype_sender == cellpair$celltype_sender[i] & cci$celltype_receiver == cellpair$celltype_receiver[i], ]
+        cci_tmp <- cci_tmp[order(-cci_tmp$score),]
+        if (nrow(cci_tmp) > top_n) {
+            cci_tmp <- cci_tmp[1:top_n, ]
+        }
+        cci_final <- rbind(cci_final, cci_tmp)
     }
-    if (length(species) > 1 | !species %in% c("Human", "Mouse", "Rat")) {
-        stop("Please provide a correct species, i.e., 'Human', 'Mouse' or 'Rat'!")
-    }
-    gene2go <- gene2go[gene2go$species == species, ]
-    gene2go <- gene2go[gene2go$symbol %in% target_genes, ]
-    return(gene2go)
+    return(cci_final)
 }

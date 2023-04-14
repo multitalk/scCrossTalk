@@ -19,6 +19,6 @@ An S4 class containing the data, meta, and results of inferred cell-cell communi
 
 \item{\code{lrdb}}{A data.frame containing expressed ligand and receptor genes.}
 
-\item{\code{result}}{A list containing enriched ligand-receptor interactions and cell-cell communications.}
+\item{\code{cci}}{A data.frame containing enriched ligand-receptor interactions.}
 }}
 

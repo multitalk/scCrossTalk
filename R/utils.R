@@ -98,8 +98,24 @@
     return(receptor_info)
 }
 
+.get_coord <- function(cci, cellpair, y_len, lrpair_name, x_len) {
+    y <- 1:y_len
+    x <- 1:x_len
+    cellpair <- rep(cellpair, x_len)
+    y <- rep(y, x_len)
+    lrpair_name <- rep(lrpair_name, each = y_len)
+    x <- rep(x, each = y_len)
+    cci_lrpair_temp <- data.frame(cellpair = cellpair, lrpair = lrpair_name, x = x, y = y, stringsAsFactors = FALSE)
+    cci_lrpair_temp$score <- 0
+    for (i in 1:nrow(cci)) {
+        cci_lrpair_temp[cci_lrpair_temp$cellpair == cci$cellpair[i] & cci_lrpair_temp$lrpair == cci$lrpair[i], ]$score <- cci$score[i]
+    }
+    return(cci_lrpair_temp)
+}
+
 #' @title Show scCrossTalk object
 #'
+#' @param object scCrossTalk object after \code{\link{create_scCrossTalk}}
 #' @return scCrossTalk object
 #' @import Matrix
 #' @importFrom methods show
@@ -111,8 +127,8 @@ setMethod(
     signature = 'scCrossTalk',
     definition = function(object) {
         cat("An object of class scCrossTalk", "\n")
-        lrpairs <- obj@cci@lrpairs
-        cat(paste0(nrow(lrpairs), " ligand-receptor interactions found!"), "\n")
+        cci <- object@cci
+        cat(paste0(nrow(cci), " ligand-receptor interactions found!"), "\n")
         return(invisible(x = NULL))
     }
 )

@@ -45,24 +45,6 @@ demo_lrpairs <- function() {
   ligand <- c("CX3CL1", "TGFB1", "CCL2", "Sst")
   receptor <- c("CX3CR1", "TGFBR2", "CCR2", "Sstr1")
   species <- c("Human", "Human", "Human", "Mouse")
-  lrpairs_demo <- data.frame(ligand = ligand, receptor = receptor, species = species,
-                             stringsAsFactors = F)
+  lrpairs_demo <- data.frame(ligand = ligand, receptor = receptor, species = species, stringsAsFactors = FALSE)
   return(lrpairs_demo)
-}
-
-#' @title Demo data of pathways
-#'
-#' @description Demo data of pathways
-#' @details \code{pathways} must be a \code{data.frame} object with four columns, namely \code{'src'}, \code{'dest'}, \code{'pathway'}, \code{'species'}
-#' @export
-#' @examples pathways_demo <- demo_pathways()
-
-demo_pathways <- function() {
-    src <- c("CDKN1A", "CDKN1A", "CDK2", "Akt1", "Tcirg1")
-    dest <- c("CDK2", "CDK4", "TP53", "Atf2", "Ppa1")
-    pathway <- c("p53 signaling pathway", "p53 signaling pathway", "p53 signaling pathway",
-                 "PI3K-Akt signaling pathway", "Oxidative phosphorylation")
-    species <- c("Human", "Human", "Human", "Mouse", "Rat")
-    pathways_demo <- data.frame(src = src, dest = dest, pathway = pathway, species = species, stringsAsFactors = FALSE)
-    return(pathways_demo)
 }

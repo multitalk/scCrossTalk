@@ -5,7 +5,7 @@
 #' @slot meta A data.frame containing the meta data.
 #' @slot species A character containing the species.
 #' @slot lrdb A data.frame containing expressed ligand and receptor genes.
-#' @slot result A list containing enriched ligand-receptor interactions and cell-cell communications.
+#' @slot cci A data.frame containing enriched ligand-receptor interactions.
 #' @import methods
 #' @name scCrossTalk
 #' @rdname scCrossTalk
@@ -13,5 +13,5 @@
 #' @exportClass scCrossTalk
 
 setClass("scCrossTalk", representation(data = "list", meta = "data.frame", species = "character",
-    lrdb = "data.frame", result = "list"), prototype(data = list(), meta = data.frame(), species = character(),
-    lrdb = data.frame(), result = list()))
+    lrdb = "data.frame", cci = "data.frame"), prototype(data = list(), meta = data.frame(), species = character(),
+    lrdb = data.frame(), cci = data.frame()))

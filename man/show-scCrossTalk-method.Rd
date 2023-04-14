@@ -6,6 +6,9 @@
 \usage{
 \S4method{show}{scCrossTalk}(object)
 }
+\arguments{
+\item{object}{scCrossTalk object after \code{\link{create_scCrossTalk}}}
+}
 \value{
 scCrossTalk object
 }
