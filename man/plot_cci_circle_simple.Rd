@@ -23,7 +23,7 @@ plot_cci_circle_simple(
 \arguments{
 \item{object}{scCrossTalk object after \code{\link{find_lrpairs}}}
 
-\item{celltype}{which cell types to plot. one or more cell types.}
+\item{celltype}{which cell types to plot. one or more cell types}
 
 \item{celltype_dir}{which direction to plot, \code{"sender"} or \code{"receiver"}. Default is as \code{"sender"}.}
 
