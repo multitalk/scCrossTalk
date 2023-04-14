@@ -6,7 +6,7 @@
 
 <img src='https://github.com/multitalk/scCrossTalk/blob/main/img/github.png'>
 
-[Cell–cell communications]((https://pubmed.ncbi.nlm.nih.gov/32435978/)) in multi-cellular organisms generally involve secreted ligand–receptor (LR) interactions, which is vital for various biological phenomena. Recent advancements in single-cell RNA sequencing (scRNA-seq) have effectively resolved cellular phenotypic heterogeneity and the cell-type composition of complex tissues, facilitating the systematic investigation of cell–cell communications at single-cell resolution. Here, we introduce scCrossTalk, a  cell-cell communication inference approach for single-cell transcriptomic data based on [CellTalkDB](https://pubmed.ncbi.nlm.nih.gov/33147626/) by enriching the highly expressed ligand-receptor pairs with the Z-test statistical method. scCrossTalk is an effective method that can help scientists analyze and visualize cell-cell communications for single-cell transcriptomic data.
+[Cell–cell communications](https://pubmed.ncbi.nlm.nih.gov/32435978/) in multi-cellular organisms generally involve secreted ligand–receptor (LR) interactions, which is vital for various biological phenomena. Recent advancements in single-cell RNA sequencing (scRNA-seq) have effectively resolved cellular phenotypic heterogeneity and the cell-type composition of complex tissues, facilitating the systematic investigation of cell–cell communications at single-cell resolution. Here, we introduce scCrossTalk, a  cell-cell communication inference approach for single-cell transcriptomic data based on [CellTalkDB](https://pubmed.ncbi.nlm.nih.gov/33147626/) by enriching the highly expressed ligand-receptor pairs with the Z-test statistical method. scCrossTalk is an effective method that can help scientists analyze and visualize cell-cell communications for single-cell transcriptomic data.
 
 # Install
 
@@ -30,7 +30,7 @@ scCrossTalk method consists of two parts, wherein the first is to enrich the LR 
 > obj <- create_scCrossTalk(sc_data, sc_celltype, species)
 > 
 > obj
-An object of class scCrossTalk 
+An object of class scCrossTalk
 0 ligand-receptor interactions found!
 
 # object: scCrossTalk object containg scRNA-seq data
@@ -48,8 +48,8 @@ An object of class scCrossTalk
 - ### Visualize the cell-cell communications and the underlying LR interactions
 ```
 # cell-cell communication analysis
-# object: scCrossTalk object after performing find_lrpairs()
 
+# object: scCrossTalk object after performing find_lrpairs()
 > plot_cci_chord(object = obj)
 > plot_cci_circle(object = obj)
 > plot_cci_heatmap(object = obj)
@@ -59,17 +59,18 @@ An object of class scCrossTalk
 
 ```
 # ligand-receptor interactions analysis
+
 # object: scCrossTalk object after performing find_lrpairs()
 # celltype_sender: sender cell type
 # celltype_receiver: receiver cell type
-
 > plot_cci_lrpairs_bubble(object = obj)
 > plot_cci_lrpairs_heatmap(object = obj)
 > plot_lrpairs_chord(object = obj, celltype_sender, celltype_receiver)
 > plot_lrpairs_heatmap(object = obj, celltype_sender, celltype_receiver)
 ```
 
-
+# About
+SpaTalk was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn
 
 
 
