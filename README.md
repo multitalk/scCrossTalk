@@ -1,5 +1,5 @@
 # scCrossTalk
-[![R-python](https://img.shields.io/badge/R%2Fpython-CMD--check-brightgreen?logo=github)](https://github.com/multitalk/scCrossTalk/actions/workflows/test.yml) [![R > 4.0](https://img.shields.io/badge/R-%3E%204.0-blue)](https://www.r-project.org/) [![CellTalkDB v1.0](https://img.shields.io/badge/CellTalkDB-v1.0-yellow)](http://tcm.zju.edu.cn/celltalkdb/)
+[![R-python](https://img.shields.io/badge/R%2Fpython-CMD--check-brightgreen?logo=github)](https://github.com/multitalk/scCrossTalk/actions/workflows/test.yml) [![CellTalkDB v1.0](https://img.shields.io/badge/CellTalkDB-v1.0-yellow)](http://tcm.zju.edu.cn/celltalkdb/) [![R > 4.0](https://img.shields.io/badge/R-%3E%204.0-blue)](https://www.r-project.org/) 
 
 
 ### A cell-cell communication inference approach for single-cell transcriptomic data
