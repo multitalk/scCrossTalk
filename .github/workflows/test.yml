@@ -15,8 +15,8 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    runs-on: macos-latest
+  build-check-on-windows:
+    runs-on: windows-latest
     strategy:
       matrix:
         r-version: ['4.1.3']
