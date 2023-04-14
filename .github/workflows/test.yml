@@ -15,8 +15,8 @@ permissions:
   contents: read
 
 jobs:
-  build-check-on-windows:
-    runs-on: windows-latest
+  build-check-on-ubuntu:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         r-version: ['4.1.3']
