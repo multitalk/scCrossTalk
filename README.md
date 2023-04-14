@@ -6,7 +6,7 @@
 
 <img src='https://github.com/multitalk/scCrossTalk/blob/main/img/github.png'>
 
-[Cell–cell communications](https://pubmed.ncbi.nlm.nih.gov/32435978/) in multi-cellular organisms generally involve secreted ligand–receptor (LR) interactions, which is vital for various biological phenomena. Recent advancements in single-cell RNA sequencing (scRNA-seq) have effectively resolved cellular phenotypic heterogeneity and the cell-type composition of complex tissues, facilitating the systematic investigation of cell–cell communications at single-cell resolution. Here, we introduce scCrossTalk, a  cell-cell communication inference approach for single-cell transcriptomic data based on [CellTalkDB](https://pubmed.ncbi.nlm.nih.gov/33147626/) by enriching the highly expressed ligand-receptor pairs with the Z-test statistical method. scCrossTalk is an effective method that can help scientists analyze and visualize cell-cell communications for single-cell transcriptomic data.
+[Cell–cell communications](https://pubmed.ncbi.nlm.nih.gov/32435978/) in multi-cellular organisms generally involve secreted ligand-receptor (LR) interactions, which is vital for various biological phenomena. Recent advancements in single-cell RNA sequencing (scRNA-seq) have effectively resolved cellular phenotypic heterogeneity and the cell-type composition of complex tissues, facilitating the systematic investigation of cell-cell communications at single-cell resolution. Here, we introduce scCrossTalk, a  cell-cell communication inference approach for single-cell transcriptomic data based on [CellTalkDB](https://pubmed.ncbi.nlm.nih.gov/33147626/) by enriching the highly expressed ligand-receptor pairs with the Z-test statistical method. scCrossTalk is an effective method that can help scientists analyze and visualize cell-cell communications for single-cell transcriptomic data.
 
 # Install
 
@@ -20,7 +20,7 @@
 ```
 
 # Usage
-scCrossTalk method consists of two parts, wherein the first is to enrich the LR pairs mediating cell-cell communications and the second is to visualize the cell-cell communications and the underlying LR interactions. Classification and description of scCrossTalk functions are shown in the __[document](https://raw.githack.com/multitalk/scCrossTalk/main/vignettes/scCrossTalk.pdf)__ and __[tutorial](https://raw.githack.com/multitalk/scCrossTalk/main/vignettes/tutorial.html)__
+scCrossTalk method consists of two parts, wherein the first is to enrich the LR pairs mediating cell-cell communications and the second is to visualize the cell-cell communications and the underlying LR interactions. Classification and description of scCrossTalk functions are shown in the __[document](https://raw.githack.com/multitalk/scCrossTalk/main/vignettes/scCrossTalk.pdf)__ and __[tutorial](https://raw.githack.com/multitalk/scCrossTalk/main/vignettes/tutorial.html)__ or __[tutorial-jupyter](https://raw.githack.com/multitalk/scCrossTalk/main/vignettes/tutorial.ipynb)__
 
 - ### Enrich the LR pairs mediating cell-cell communications
 ```

@@ -29,8 +29,6 @@ plot_cci_chord <- function(object, celltype = NULL, celltype_color = NULL, ligan
         stop("No cci found in object!")
     }
     celltype_raw <- unique(c(cci$celltype_sender, cci$celltype_receiver))
-    ligand_name <- unique(cci$ligand)
-    receptor_name <- unique(cci$receptor)
     if (is.null(celltype[1])) {
         celltype <- celltype_raw
     } else {
@@ -61,6 +59,8 @@ plot_cci_chord <- function(object, celltype = NULL, celltype_color = NULL, ligan
         link_color <- edge_color
         names(link_color) <- celltype
     }
+    ligand_name <- unique(cci$ligand)
+    receptor_name <- unique(cci$receptor)
     if (!is.null(ligand[1])) {
         if (!all(ligand %in% ligand_name)) {
             stop("Please input the right ligand name!")
@@ -146,8 +146,6 @@ plot_cci_circle <- function(object, celltype = NULL, ligand = NULL, receptor = N
         stop("No cci found in object!")
     }
     celltype_raw <- unique(c(cci$celltype_sender, cci$celltype_receiver))
-    ligand_name <- unique(cci$ligand)
-    receptor_name <- unique(cci$receptor)
     if (is.null(celltype[1])) {
         celltype <- celltype_raw
     } else {
@@ -178,6 +176,8 @@ plot_cci_circle <- function(object, celltype = NULL, ligand = NULL, receptor = N
         link_color <- edge_color
         names(link_color) <- celltype
     }
+    ligand_name <- unique(cci$ligand)
+    receptor_name <- unique(cci$receptor)
     if (!is.null(ligand[1])) {
         if (!all(ligand %in% ligand_name)) {
             stop("Please input the right ligand name!")
@@ -257,6 +257,154 @@ plot_cci_circle <- function(object, celltype = NULL, ligand = NULL, receptor = N
         panel.spacing = unit(c(0, 0, 0, 0), "null"))
 }
 
+#' @title Circle plot of cell-cell communications by retaining all cell type nodes
+#'
+#' @description Circle plot of cell-cell communications from senders to receivers with the sum of inferred number or score of ligand-receptor interactions by retaining all cell type nodes
+#' @param object scCrossTalk object after \code{\link{find_lrpairs}}
+#' @param celltype which cell types to plot. one or more cell types
+#' @param celltype_dir which direction to plot, \code{"sender"} or \code{"receiver"}. Default is as \code{"sender"}.
+#' @param ligand which ligand to use. Default is to plot all inferred ligands
+#' @param receptor which receptor to use. Default is to plot all inferred receptors
+#' @param celltype_color Colors for the cell types, whose length must be equal to \code{celltype}
+#' @param edge_color Colors for the edges from the sender cell type, whose length must be equal to \code{celltype}
+#' @param edge_type Types for the edges. \code{"fan"} by default, \code{"link"}, \code{"hive"}
+#' @param show_type which type to show, \code{"number"} and \code{"score"} for sum of inferred LR number and score, respectively. Default is \code{"number"}
+#' @param if_show_autocrine Whether to show autocrine. Default is \code{FALSE}
+#' @param edge_alpha Transparency of edge. Default is \code{0.5}
+#' @param node_size Size of node. Default is \code{10}
+#' @param text_size Size of text. Default is \code{5}
+#' @import ggplot2 Matrix ggraph
+#' @importFrom scales hue_pal
+#' @importFrom igraph graph_from_data_frame
+#' @return Circle plot of cell-cell communications mediated by ligand-receptor interactions
+#' @export
+
+plot_cci_circle_simple <- function(object, celltype, celltype_dir = "sender",ligand = NULL, receptor = NULL, celltype_color = NULL, edge_color = NULL, edge_type = "fan",
+    show_type = "number", if_show_autocrine = FALSE, edge_alpha = 0.5, node_size = 10, text_size = 5) {
+    # check input
+    if (!is(object, "scCrossTalk")) {
+        stop("Invalid class for object: must be 'scCrossTalk'!")
+    }
+    cci <- object@cci
+    if (nrow(cci) == 0) {
+        stop("No cci found in object!")
+    }
+    celltype_raw <- unique(c(cci$celltype_sender, cci$celltype_receiver))
+    if (is.null(celltype[1])) {
+        stop("Please input the celltype!")
+    } else {
+        if (!all(celltype %in% celltype_raw)) {
+            stop("Please input the right celltype name!")
+        }
+        if (celltype_dir == "sender") {
+            cci <- cci[cci$celltype_sender %in% celltype, ]
+        } else {
+            cci <- cci[cci$celltype_receiver %in% celltype, ]
+        }
+    }
+    if (nrow(cci) == 0) {
+        stop("No cci found for these cell types!")
+    }
+    # color
+    if (is.null(celltype_color[1])) {
+        clu_col <- scales::hue_pal()(length(celltype_raw))
+    } else {
+        if (length(celltype_color) != length(celltype_raw)) {
+            stop("The length of celltype_color must be equal to all celltype in object@cci")
+        }
+        clu_col <- celltype_color
+    }
+    names(clu_col) <- celltype_raw
+    if (is.null(edge_color[1])) {
+        link_color <- clu_col
+    } else {
+        if (length(edge_color) != length(celltype_raw)) {
+            stop("The length of edge_color must be equal to celltype!")
+        }
+        link_color <- edge_color
+        names(link_color) <- celltype_raw
+    }
+    ligand_name <- unique(cci$ligand)
+    receptor_name <- unique(cci$receptor)
+    if (!is.null(ligand[1])) {
+        if (!all(ligand %in% ligand_name)) {
+            stop("Please input the right ligand name!")
+        }
+        cci <- cci[cci$ligand %in% ligand, ]
+    }
+    if (nrow(cci) == 0) {
+        stop("No cci found for these ligands!")
+    }
+    if (!is.null(receptor[1])) {
+        if (!all(receptor %in% receptor_name)) {
+            stop("Please input the right receptor name!")
+        }
+        cci <- cci[cci$receptor %in% receptor, ]
+    }
+    if (nrow(cci) == 0) {
+        stop("No cci found for these receptors!")
+    }
+    if (!if_show_autocrine) {
+        cci <- cci[cci$celltype_sender != cci$celltype_receiver, ]
+    }
+    if (nrow(cci) == 0) {
+        stop("No cci found for these paracrine!")
+    }
+    cci_pair <- unique(cci[, c("celltype_sender", "celltype_receiver")])
+    if (show_type == "number") {
+        cci <- unique(cci[, c("celltype_sender", "celltype_receiver", "ligand", "receptor")])
+        cci_pair$value <- 0
+        for (i in 1:nrow(cci_pair)) {
+            cci_pair$value[i] <- nrow(cci[cci$celltype_sender == cci_pair$celltype_sender[i] & cci$celltype_receiver == cci_pair$celltype_receiver[i], ])
+        }
+        show_type_new <- "number"
+    }
+    if (show_type == "score") {
+        cci <- unique(cci[, c("celltype_sender", "celltype_receiver", "score")])
+        cci_pair$value <- 0
+        for (i in 1:nrow(cci_pair)) {
+            cci_pair$value[i] <- sum(cci[cci$celltype_sender == cci_pair$celltype_sender[i] & cci$celltype_receiver == cci_pair$celltype_receiver[i], ]$score)
+        }
+        show_type_new <- "score"
+    }
+    colnames(cci_pair) <- c("from", "to", "value")
+    cci_pair$sender <- as.character(cci_pair$from)
+    celltype_node <- data.frame(name = celltype_raw, celltype = celltype_raw, id = 1:length(celltype_raw), stringsAsFactors = FALSE)
+    # angle
+    angle <- 360 * (celltype_node$id - 0.5)/nrow(celltype_node)
+    celltype_node$angle <- ifelse(angle > 180, 90 - angle + 180, 90 - angle)
+    celltype_node$hjust <- ifelse(angle > 180, 1, 0)
+    celltype_ordered <- celltype_raw[order(celltype_raw)]
+    clu_col <- clu_col[celltype_ordered]
+    celltype_ordered <- celltype_ordered[celltype_ordered %in% cci_pair$sender]
+    link_color <- link_color[celltype_ordered]
+    cci_pair_new <- data.frame()
+    for (i in 1:length(celltype_ordered)) {
+      cci_pair1 <- cci_pair[cci_pair$sender == celltype_ordered[i],]
+      cci_pair_new <- rbind(cci_pair_new, cci_pair1)
+    }
+    mygraph <- graph_from_data_frame(cci_pair_new, vertices = celltype_node, directed = FALSE)
+    p <- ggraph(mygraph, layout = "linear", circular = TRUE)
+    if (edge_type == "fan") {
+      p <- p + geom_edge_fan(aes(edge_colour = sender, edge_width = value), edge_alpha = edge_alpha)
+    }
+    if (edge_type == "link") {
+      p <- p + geom_edge_link(aes(edge_colour = sender, edge_width = value), edge_alpha = edge_alpha)
+    }
+    if (edge_type == "hive") {
+      p <- p + geom_edge_hive(aes(edge_colour = sender, edge_width = value), edge_alpha = edge_alpha)
+    }
+    if (if_show_autocrine) {
+      p <- p + geom_edge_loop(aes(edge_colour = sender, edge_width = value), edge_alpha = edge_alpha)
+    }
+    p + geom_node_point(aes(color = celltype_raw), size = node_size) + scale_color_manual(values = clu_col) +
+      geom_node_text(aes(x = x * 1.2, y = y * 1.2, label = name, angle = angle, hjust = hjust), size = text_size) +
+      scale_edge_color_manual(values = link_color) + expand_limits(x = c(-1.6, 1.6), y = c(-1.6, 1.6)) +
+      coord_fixed() + theme_minimal() + theme(legend.position = "none", panel.grid = element_blank(), axis.line = element_blank(),
+      axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank(), plot.margin = unit(c(0, 0, 0, 0), "null"),
+      panel.spacing = unit(c(0, 0, 0, 0), "null"))
+}
+
 #' @title Sankey plot of cell-cell communications
 #'
 #' @description Sankey plot of cell-cell communications from senders to receivers with the sum of inferred number or score of ligand-receptor interactions
@@ -289,8 +437,6 @@ plot_cci_sankey <- function(object, celltype = NULL, ligand = NULL, receptor = N
         stop("No cci found in object!")
     }
     celltype_raw <- unique(c(cci$celltype_sender, cci$celltype_receiver))
-    ligand_name <- unique(cci$ligand)
-    receptor_name <- unique(cci$receptor)
     if (is.null(celltype[1])) {
         celltype <- celltype_raw
     } else {
@@ -330,6 +476,8 @@ plot_cci_sankey <- function(object, celltype = NULL, ligand = NULL, receptor = N
             names(link_color) <- celltype
         }
     }
+    ligand_name <- unique(cci$ligand)
+    receptor_name <- unique(cci$receptor)
     if (!is.null(ligand[1])) {
         if (!all(ligand %in% ligand_name)) {
             stop("Please input the right ligand name!")
@@ -452,8 +600,6 @@ plot_cci_heatmap <- function(object, celltype = NULL, ligand = NULL, receptor = 
         stop("No cci found in object!")
     }
     celltype_raw <- unique(c(cci$celltype_sender, cci$celltype_receiver))
-    ligand_name <- unique(cci$ligand)
-    receptor_name <- unique(cci$receptor)
     if (is.null(celltype[1])) {
         celltype <- celltype_raw
     } else {
@@ -465,6 +611,8 @@ plot_cci_heatmap <- function(object, celltype = NULL, ligand = NULL, receptor = 
     if (nrow(cci) == 0) {
         stop("No cci found for these cell types!")
     }
+    ligand_name <- unique(cci$ligand)
+    receptor_name <- unique(cci$receptor)
     if (!is.null(ligand[1])) {
         if (!all(ligand %in% ligand_name)) {
             stop("Please input the right ligand name!")
@@ -536,15 +684,20 @@ plot_cci_lrpairs_heatmap <- function(object, celltype = NULL, ligand = NULL, rec
     if (nrow(cci) == 0) {
         stop("No cci found in object!")
     }
-    celltype_sender <- unique(cci$celltype_sender)
-    ligand_name <- unique(cci$ligand)
-    receptor_name <- unique(cci$receptor)
-    if (!is.null(celltype[1])) {
-        if (all(celltype %in% celltype_sender)) {
+    celltype_raw <- unique(c(cci$celltype_sender, cci$celltype_receiver))
+    if (is.null(celltype[1])) {
+        celltype <- celltype_raw
+    } else {
+        if (!all(celltype %in% celltype_raw)) {
             stop("Please input the right celltype name!")
         }
-        cci <- cci[cci$celltype_sender %in% celltype, ]
+        cci <- cci[cci$celltype_sender %in% celltype & cci$celltype_receiver %in% celltype, ]
     }
+    if (nrow(cci) == 0) {
+        stop("No cci found for these cell types!")
+    }
+    ligand_name <- unique(cci$ligand)
+    receptor_name <- unique(cci$receptor)
     if (!is.null(ligand[1])) {
         if (!all(ligand %in% ligand_name)) {
             stop("Please input the right ligand name!")
@@ -617,15 +770,20 @@ plot_cci_lrpairs_bubble <- function(object, celltype = NULL, ligand = NULL, rece
     if (nrow(cci) == 0) {
         stop("No cci found in object!")
     }
-    celltype_sender <- unique(cci$celltype_sender)
-    ligand_name <- unique(cci$ligand)
-    receptor_name <- unique(cci$receptor)
-    if (!is.null(celltype[1])) {
-        if (all(celltype %in% celltype_sender)) {
+    celltype_raw <- unique(c(cci$celltype_sender, cci$celltype_receiver))
+    if (is.null(celltype[1])) {
+        celltype <- celltype_raw
+    } else {
+        if (!all(celltype %in% celltype_raw)) {
             stop("Please input the right celltype name!")
         }
-        cci <- cci[cci$celltype_sender %in% celltype, ]
+        cci <- cci[cci$celltype_sender %in% celltype & cci$celltype_receiver %in% celltype, ]
     }
+    if (nrow(cci) == 0) {
+        stop("No cci found for these cell types!")
+    }
+    ligand_name <- unique(cci$ligand)
+    receptor_name <- unique(cci$receptor)
     if (!is.null(ligand[1])) {
         if (!all(ligand %in% ligand_name)) {
             stop("Please input the right ligand name!")
@@ -705,7 +863,7 @@ plot_lrpairs_chord <- function(object, celltype_sender, celltype_receiver, cellt
         stop("Invalid class for object: must be 'scCrossTalk'!")
     }
     cci <- object@cci
-    celltype <- unique(c(cci$celltype_sender, cci$celltype_receiver))
+    'celltype' <- unique(c(cci$celltype_sender, cci$celltype_receiver))
     if (nrow(cci) == 0) {
         stop("No cci found in object!")
     }
@@ -899,6 +1057,5 @@ plot_lrpairs_heatmap <- function(object, celltype_sender, celltype_receiver, lig
         heatmaply::heatmaply(x = as.matrix(cci), dendrogram = "none", xlab = paste0(celltype_sender, ": ligand"), ylab = paste0(celltype_receiver, ": receptor"), main = "LR score",
             grid_color = "black",fontsize_row = text_size, na.value = "white", fontsize_col = text_size, labCol = colnames(cci), labRow = rownames(cci),
             heatmap_layers = theme(axis.line=element_blank()), label_names = c("receptor","ligand","score"), ...)
-      
     }
 }
