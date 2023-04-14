@@ -70,13 +70,4 @@ An object of class scCrossTalk
 ```
 
 # About
-SpaTalk was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn
-
-
-
-
-
-
-
-
-
+scCrossTalk was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn
