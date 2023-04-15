@@ -19,7 +19,7 @@ Cell-cell communications in multi-cellular organisms generally involve secreted 
 ```
 
 # Usage
-scCrossTalk method consists of two parts, wherein the first is to enrich the LR pairs mediating cell-cell communications and the second is to visualize the cell-cell communications and the underlying LR interactions. Classification and description of scCrossTalk functions are shown in the __[document](https://github.com/multitalk/scCrossTalk/blob/main/vignettes/scCrossTalk.pdf)__ and __[tutorial](https://raw.githack.com/multitalk/scCrossTalk/main/vignettes/tutorial.html)__ or __[tutorial-jupyter](https://github.com/multitalk/scCrossTalk/blob/main/vignettes/tutorial.ipynb)__
+scCrossTalk method consists of two parts, wherein the first is to enrich the LR pairs mediating cell-cell communications and the second is to visualize the cell-cell communications and the underlying LR interactions. Classification and description of scCrossTalk functions are shown in the __[document](https://github.com/multitalk/scCrossTalk/blob/main/vignettes/scCrossTalk.pdf)__ and __[tutorial](https://raw.githack.com/multitalk/scCrossTalk/main/vignettes/tutorial.html)__
 
 - ### Enrich the LR pairs mediating cell-cell communications
 ```
