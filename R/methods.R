@@ -134,7 +134,7 @@ find_lrpairs <- function(object, lrpairs, min_cell_num = 10, cell_min_pct = 0.1,
         pb$tick()
     }
     if (nrow(res_pairs) > 0) {
-        res_pairs <- res_pairs[,c(12,13,6,1,7:10,2:4)]
+        res_pairs <- res_pairs[,c(12,13,6,1,7:10,2:5)]
         res_pairs$score <- res_pairs$ligand_exp_avg * res_pairs$receptor_exp_avg
         object@cci <- res_pairs
     } else {
