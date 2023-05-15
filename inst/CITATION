@@ -1,22 +1,20 @@
-citHeader("Please cite Shao X (2023) for using scCrossTalk")
-
-citEntry(
-  entry    = "Article",
-  title    = "Single-cell analysis reveals a pathogenic cellular module associated with early allograft dysfunction after liver transplantation",
-  author = personList(
-             as.person("Xin Shao"),
-             as.person("Zheng Wang"),
-             as.person("Kai Wang"),
-             as.person("Xiaoyan Lu"),
-             as.person("Zhoucheng Wang"),
-             as.person("Ping Zhang"),
-             as.person("Jie Liao"),
-             as.person("Penghui Yang"),
-             as.person("Xiao Xu"),
-             as.person("Xiaohui Fan")
+bibentry(
+  bibtype    = "Article",
+  title    = "Single-cell analysis reveals a pathogenic immune niche associated with early allograft dysfunction in liver transplantation",
+  author = c(
+             person("Xin Shao"),
+             person("Zheng Wang"),
+             person("Kai Wang"),
+             person("Xiaoyan Lu"),
+             person("Ping Zhang"),
+			 person("Rongfang Guo"),
+             person("Jie Liao"),
+             person("Penghui Yang"),
+             person("Xiao Xu"),
+             person("Xiaohui Fan")
              ),
   journal  = "Under submission",
   year     = "2023",
-  textVersion = paste("Shao, X. et al. Single-cell analysis reveals a pathogenic cellular module associated with early allograft dysfunction after liver transplantation. 2023."
+  textVersion = paste("Shao, X. et al. Single-cell analysis reveals a pathogenic immune niche associated with early allograft dysfunction in liver transplantation. 2023."
   )
 )
