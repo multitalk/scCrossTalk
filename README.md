@@ -24,7 +24,7 @@ scCrossTalk method consists of two parts, wherein the first is to enrich the LR 
 - ### Enrich the LR pairs mediating cell-cell communications
 ```
 # sc_data: A matrix containing counts of scRNA-seq data
-# sc_celltype:  A character containing the cell types for scRNA-seq data
+# sc_celltype: A character containing the cell types for scRNA-seq data
 
 > obj <- create_scCrossTalk(sc_data, sc_celltype, species)
 > 
