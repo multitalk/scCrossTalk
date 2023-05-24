@@ -863,7 +863,7 @@ plot_lrpairs_chord <- function(object, celltype_sender, celltype_receiver, cellt
         stop("Invalid class for object: must be 'scCrossTalk'!")
     }
     cci <- object@cci
-    'celltype' <- unique(c(cci$celltype_sender, cci$celltype_receiver))
+    celltype <- unique(c(cci$celltype_sender, cci$celltype_receiver))
     if (nrow(cci) == 0) {
         stop("No cci found in object!")
     }
