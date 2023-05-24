@@ -1,5 +1,5 @@
 # scCrossTalk
-[![R-CMD-check](https://img.shields.io/badge/R--CMD--check-passing-brightgreen?logo=github)](https://github.com/multitalk/scCrossTalk/actions/workflows/test.yml) [![CellTalkDB v1.0](https://img.shields.io/badge/CellTalkDB-v1.0-yellow)](http://tcm.zju.edu.cn/celltalkdb/)
+[![R-CMD-check](https://img.shields.io/badge/R--CMD--check-passing-brightgreen?logo=github)](https://github.com/multitalk/scCrossTalk/actions) [![CellTalkDB v1.0](https://img.shields.io/badge/CellTalkDB-v1.0-yellow)](http://tcm.zju.edu.cn/celltalkdb/)
 
 ### A cell-cell communication inference method for single-cell transcriptomic data
 
