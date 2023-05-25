@@ -103,7 +103,7 @@ plot_cci_chord <- function(object, celltype = NULL, celltype_color = NULL, ligan
         show_type_new <- "score"
     }
     colnames(cci_pair) <- c("from", "to", "value")
-    chordDiagram(x = cci_pair, grid.col = clu_col[unique(cci_pair$from)], col = link_color[cci_pair$from], preAllocateTracks = 1, transparency = 0.25, directional = 1,
+    chordDiagram(x = cci_pair, grid.col = clu_col[celltype], col = link_color[cci_pair$from], preAllocateTracks = 1, transparency = 0.25, directional = 1,
         direction.type = c("arrows", "diffHeight"), diffHeight = -0.04, annotationTrack = "grid", link.arr.type = edge_type, ...)
     circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
         xlim = get.cell.meta.data("xlim")
