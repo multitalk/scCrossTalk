@@ -32,14 +32,14 @@ rev_gene_list <- function(rawdata_list, gene_info){
 
 #---------------------------------Process-----------------------------------
 # [1] quality control
-# 4000 > n_Features > 200 ,percent.mt < 50
+# n_Features < 4000, percent.mt < 25
 # read the raw data with Seurat as a list
 library(Seurat)
 rawdata_list <- readRDS("/path/to/rawdata_list.rds")
 rawdata_list <- lapply(X = rawdata_list, FUN = CreateSeuratObject)
 rawdata_list <- lapply(X = rawdata_list, FUN = function(seurat_data){
   seurat_data[["percent.mt"]] <- PercentageFeatureSet(seurat_data, pattern = "^mt-")
-  seurat_data <- subset(seurat_data, subset = nFeature_RNA > 200 & nFeature_RNA < 4000 & percent.mt < 50)
+  seurat_data <- subset(seurat_data, subset = nFeature_RNA < 4000 & percent.mt < 25)
   return(seurat_data)
 })
 
