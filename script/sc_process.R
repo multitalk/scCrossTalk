@@ -33,6 +33,7 @@ rev_gene_list <- function(rawdata_list, gene_info){
 #---------------------------------Process-----------------------------------
 # [1] quality control
 # 4000 > n_Features > 200 ,percent.mt < 50
+# read the raw data with Seurat as a list
 library(Seurat)
 rawdata_list <- readRDS("/path/to/rawdata_list.rds")
 rawdata_list <- lapply(X = rawdata_list, FUN = CreateSeuratObject)
