@@ -1,6 +1,6 @@
 bibentry(
   bibtype    = "Article",
-  title    = "Single-cell analysis reveals a pathogenic immune niche associated with early allograft dysfunction in liver transplantation",
+  title    = "A Single-Cell Landscape of Human Liver Transplantation Reveals a Pathogenic Immune Niche Associated with Early Allograft Dysfunction",
   author = c(
              person("Xin Shao"),
              person("Zheng Wang"),
@@ -13,8 +13,8 @@ bibentry(
              person("Xiao Xu"),
              person("Xiaohui Fan")
              ),
-  journal  = "Under submission",
-  year     = "2023",
-  textVersion = paste("Shao, X. et al. Single-cell analysis reveals a pathogenic immune niche associated with early allograft dysfunction in liver transplantation. 2023."
+  journal  = "Engineering",
+  year     = "2024",
+  textVersion = paste("doi: https://doi.org/10.1016/j.eng.2023.12.004"
   )
 )
