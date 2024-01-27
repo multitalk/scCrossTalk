@@ -68,7 +68,7 @@ An object of class scCrossTalk
 ```
 
 # About
-scCrossTalk was used in our manuscript to dissect the different mechanism underlying cell-cell communications within the transplanted livers of EAD and non-EAD patients. 
+scCrossTalk was designed in our manuscript to dissect the different mechanism underlying cell-cell communications within the transplanted livers of EAD and non-EAD patients. 
 
 <img src='https://github.com/multitalk/scCrossTalk/blob/main/img/ccc.png'>
 
