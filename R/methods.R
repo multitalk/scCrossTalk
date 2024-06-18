@@ -42,7 +42,17 @@ create_scCrossTalk <- function(sc_data, sc_celltype, species, if_normalize = TRU
     if (if_normalize) {
         sc_data <- Seurat::CreateSeuratObject(sc_data)
         sc_data <- Seurat::NormalizeData(sc_data,verbose = FALSE)
-        sc_data <- sc_data[["RNA"]]@data
+        ver <- packageVersion("Seurat")
+        ver <- substr(ver,1,1)
+        if (ver >= 5) {
+            genenames <- rownames(sc_data)
+            cellnames <- colnames(sc_data)
+            sc_data <- sc_data[["RNA"]]@layers$data
+            rownames(sc_data) <- genenames
+            colnames(sc_data) <- cellnames
+        } else {
+            sc_data <- sc_data[["RNA"]]@data
+        }
     }
     # generate scCrossTalk object
     object <- new("scCrossTalk", data = list(data = sc_data), meta = sc_meta, species = species)

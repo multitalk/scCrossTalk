@@ -67,6 +67,9 @@ An object of class scCrossTalk
 > plot_lrpairs_heatmap(object = obj, celltype_sender, celltype_receiver)
 ```
 
+### News
+- Compatible with Seurat 5.
+
 # About
 scCrossTalk was designed in our manuscript to dissect the different mechanism underlying cell-cell communications within the transplanted livers of EAD and non-EAD patients. 
 
