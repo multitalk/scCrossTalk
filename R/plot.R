@@ -146,6 +146,7 @@ plot_cci_circle <- function(object, celltype = NULL, ligand = NULL, receptor = N
         stop("No cci found in object!")
     }
     celltype_raw <- unique(c(cci$celltype_sender, cci$celltype_receiver))
+    celltype_raw <- celltype_raw[order(celltype_raw)]
     if (is.null(celltype[1])) {
         celltype <- celltype_raw
     } else {
@@ -290,6 +291,7 @@ plot_cci_circle_simple <- function(object, celltype, celltype_dir = "sender",lig
         stop("No cci found in object!")
     }
     celltype_raw <- unique(c(cci$celltype_sender, cci$celltype_receiver))
+    celltype_raw <- celltype_raw[order(celltype_raw)]
     if (is.null(celltype[1])) {
         stop("Please input the celltype!")
     } else {
@@ -437,6 +439,7 @@ plot_cci_sankey <- function(object, celltype = NULL, ligand = NULL, receptor = N
         stop("No cci found in object!")
     }
     celltype_raw <- unique(c(cci$celltype_sender, cci$celltype_receiver))
+    celltype_raw <- celltype_raw[order(celltype_raw)]
     if (is.null(celltype[1])) {
         celltype <- celltype_raw
     } else {
