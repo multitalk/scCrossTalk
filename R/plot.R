@@ -735,7 +735,7 @@ plot_cci_lrpairs_heatmap <- function(object, celltype = NULL, ligand = NULL, rec
     rownames(cci_pair) <- cci_pair$cellpair
     cci_pair <- cci_pair[, -1]
     if (!if_horizontal) {
-        cci <- as.data.frame(t(cci))
+        cci_pair <- as.data.frame(t(cci_pair))
     }
     heat_col <- viridis::viridis(n = 256, alpha = 1, begin = 0, end = 1, option = viridis_option)
     if (if_horizontal) {
